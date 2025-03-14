@@ -1,7 +1,9 @@
 TABLAK := gyogyszer gyse
 EVEK := 2024 2025
 
-all: $(foreach tabla,$(TABLAK),output/$(tabla)/REKORDLEIRAS.xls $(foreach ev,$(EVEK),output/$(tabla)/$(ev).csv))
+all: $(foreach tabla,$(TABLAK),output/$(tabla)/REKORDLEIRAS.xls output/$(tabla).csv)
+output/%.csv: %.do $(foreach ev,$(EVEK),output/%/$(ev).csv)
+	stata -b do $<
 output/gyse/%.csv: temp/%01.mdb
 	mkdir -p $(dir $@)
 	mdb-export $< ORSZAGOS_FORGALOM > $@
