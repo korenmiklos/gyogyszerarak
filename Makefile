@@ -1,7 +1,9 @@
 TABLAK := gyogyszer gyse
 EVEK := 2024 2025
 
-all: $(foreach tabla,$(TABLAK),output/$(tabla)/REKORDLEIRAS.xls output/$(tabla).csv)
+all: $(foreach tabla,$(TABLAK),output/$(tabla)/REKORDLEIRAS.xls) output/gyogyszerarak.csv
+output/gyogyszerarak.csv: append.do $(foreach tabla,$(TABLAK),output/$(tabla).csv)
+	stata -b do $<
 output/%.csv: %.do $(foreach ev,$(EVEK),output/%/$(ev).csv)
 	stata -b do $<
 output/gyse/%.csv: temp/%01.mdb
