@@ -8,9 +8,9 @@ foreach t in `YEARS' {
     append using `forgalom'
     save `forgalom', replace
 }
-rename tbtam tb_tamogatas
+generate tb_tamogatas = tbtam  + kvater
 rename fogyar teljes_ar
-generate teritesi_dij = terdij + kvater
+generate teritesi_dij = terdij 
 rename doboz mennyiseg
 
 * aggregate over venytipus, but not jogcim
